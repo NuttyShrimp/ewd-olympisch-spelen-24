@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Layout</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+</head>
+<body>
+<header>
+    <div class="is-flex is-flex-direction-row is-justify-content-space-between p-4" sec:authorize="${isAuthenticated()}">
+        <a href="/" class="is-color-text">
+            <p class="is-size-4">Olympics 2024</p>
+        </a>
+        <div class="is-flex is-flex-direction-row is-gap-2 is-justify-content-end is-align-items-center has-text-weight-semibold">
+        <p th:text="${#authentication.getName()}"></p>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="button">Logout</button>
+            <input type="hidden" value="Logout"/>
+            <input type="hidden"
+                   th:name="${_csrf.parameterName}"
+                   th:value="${_csrf.token}"/>
+        </form>
+        </div>
+    </div>
+</header>
+<section layout:fragment="content">
+    <p>Page content goes here</p>
+</section>
+</body>
+</html>

@@ -1,30 +1,39 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
 <head>
     <meta charset="UTF-8">
     <title></title>
 </head>
-<body onload='document.loginForm.username.focus();'><h1>Spring Security Custom Login Form (Annotation)</h1>
-<div id="login-box"><h3>Login with Username and Password</h3>
-    <div th:if="${error}" class="error" th:text="${error}"></div>
-    <div th:if="${msg}" class="msg" th:text="${msg}"></div>
-    <form th:action="@{/login}" method="post">
-        <table>
-            <tr>
-                <td>User:</td>
-                <td><input type='text' name='username' value=''></td>
-            </tr>
-            <tr>
-                <td>Password:</td>
-                <td><input type='password' name='password'/></td>
-            </tr>
-            <tr>
-                <td colspan='2'>
-                    <button name="submit" type="submit">Login</button>
-                </td>
-            </tr>
-        </table>
-        <input type="hidden" name="_csrf" th:value="${_csrf.token}"/></form>
-</div>
+<body onload='document.loginForm.username.focus();'>
+<section layout:fragment="content">
+    <h1 class="is-size-1">Olympics 2024</h1>
+    <form th:action="@{/login}" method="post" class="is-flex is-justify-content-center mt-2">
+        <div class="card">
+            <div class="card-header">
+                <div th:if="${error}" class="error" th:text="${error}"></div>
+                <div th:if="${msg}" class="msg" th:text="${msg}"></div>
+            </div>
+            <div class="card-content">
+                <div class="field">
+                    <label class="label">Username</label>
+                    <div class="control">
+                        <input class="input" type='text' name='username' value=''>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Password</label>
+                    <div class="control">
+                        <input class="input" type='password' name='password'/>
+                    </div>
+                </div>
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+            </div>
+            <div class="card-footer">
+                <button name="submit" class="card-footer-item" type="submit">Login</button>
+            </div>
+        </div>
+    </form>
+</section>
 </body>
 </html>
