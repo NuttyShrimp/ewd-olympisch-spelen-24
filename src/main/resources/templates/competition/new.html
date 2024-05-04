@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>New Competition - Olympics 2024</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <form th:action="@{|/competition/${sport_id}/new|}" th:object="${competition}" method="post">
+        <div class="field">
+            <label class="label">Start time</label>
+            <div class="control">
+                <input class="input" type="datetime-local" th:errorclass="is-danger" th:field="*{time}">
+            </div>
+            <p class="help is-danger" th:if="${#fields.hasErrors('time')}" th:errors="*{time}"></p>
+        </div>
+        <div class="field">
+            <label class="label">Price for one ticket</label>
+            <div class="control">
+                <input class="input" type="number" min="0" max="150" th:errorclass="is-danger"  th:field="*{price}">
+            </div>
+            <p class="help is-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
+        </div>
+        <div class="field">
+            <label class="label">Amount of places</label>
+            <div class="control">
+                <input class="input" type="number" min="1" max="50" th:errorclass="is-danger"  th:field="*{places}">
+            </div>
+            <p class="help is-danger" th:if="${#fields.hasErrors('places')}" th:errors="*{places}"></p>
+        </div>
+        <div class="field">
+            <label class="label">Olympic Nr 1</label>
+            <div class="control">
+                <input class="input" type="number" min="10000" max="99999" th:errorclass="is-danger"  th:field="*{olympicNr1}">
+            </div>
+            <p class="help is-danger" th:if="${#fields.hasErrors('olympicNr1')}" th:errors="*{olympicNr1}"></p>
+        </div>
+        <div class="field">
+            <label class="label">Olympic Nr 2</label>
+            <div class="control">
+                <input class="input" type="number" th:errorclass="is-danger"  th:field="*{olympicNr2}">
+            </div>
+            <p class="help is-danger" th:if="${#fields.hasErrors('olympicNr2')}" th:errors="*{olympicNr2}"></p>
+        </div>
+        <div class="field">
+            <label class="label">Stadium</label>
+            <div class="control">
+                <div class="select">
+                    <select th:field="*{stadium}">
+                        <option th:each="stadium : ${stadiums}" th:value="${stadium.getId()}"
+                                th:text="${stadium.getName()}"></option>
+                    </select>
+                </div>
+            </div>
+            <p class="help is-danger" th:if="${#fields.hasErrors('stadium')}" th:errors="*{stadium}"></p>
+        </div>
+        <div class="field">
+            <label class="label">Disciplines (optional)</label>
+            <div class="control">
+                <div class="select is-multiple">
+                    <select multiple th:field="*{disciplines}">
+                        <option th:each="discipline : ${disciplines}" th:value="${discipline.getId()}"
+                                th:text="${discipline.getName()}"></option>
+                    </select>
+                </div>
+            </div>
+            <p class="help is-danger" th:if="${#fields.hasErrors('disciplines')}" th:errors="*{disciplines}"></p>
+        </div>
+        <div class="is-grouped">
+            <a class="button is-danger" th:href="|/sport/${sport_id}|">Cancel</a>
+            <button class="button is-success" type="submit">Create</button>
+        </div>
+    </form>
+</section>
+</body>
+</html>

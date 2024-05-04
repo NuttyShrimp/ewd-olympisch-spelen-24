@@ -19,10 +19,6 @@ import java.util.Set;
 @Table(name = "competitions")
 public class Competition {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
-    private Long id;
-
     @NotNull
     @NumberFormat(pattern = "#####")
     private Long olympicNr1;
