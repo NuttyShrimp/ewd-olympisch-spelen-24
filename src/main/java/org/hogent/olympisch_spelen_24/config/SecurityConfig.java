@@ -29,7 +29,7 @@ public class SecurityConfig {
                     requests.requestMatchers("/login**").permitAll()
                             .requestMatchers("/css**").permitAll()
                             .requestMatchers("/403**").permitAll()
-                            .requestMatchers("/*").authenticated()
+                            .requestMatchers("/**").authenticated()
                 )
                 .formLogin(form ->
                     form.defaultSuccessUrl("/")
