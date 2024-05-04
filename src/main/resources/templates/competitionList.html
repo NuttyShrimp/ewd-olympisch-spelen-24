@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Competition List - Olympics 2024</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="is-flex is-justify-content-space-between">
+        <h1 class="is-size-4 has-text-weight-bold" th:text="${sport.getName()}"></h1>
+        <a th:href="|/competition/${sport.getId()}/new|" sec:authorize="hasRole('ADMIN')" class="button is-primary">Create</a>
+    </div>
+    <div>
+    </div>
+</section>
+</body>
+</html>

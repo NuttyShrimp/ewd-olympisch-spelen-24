@@ -4,11 +4,12 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.Set;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "sport")
+@Table(name = "sports")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode(exclude = "id")
 public class Sport implements Serializable {
@@ -17,6 +18,9 @@ public class Sport implements Serializable {
     private Long id;
 
     private String name;
+
+    @OneToMany(mappedBy = "sport")
+    private Set<Discipline> disciplines;
 
     public Sport(String name) {
         this.name = name;

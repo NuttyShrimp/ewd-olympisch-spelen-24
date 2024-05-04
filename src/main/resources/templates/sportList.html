@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Sport List - Olympics 2024</title>
+</head>
+<body>
+<section layout:fragment="content" class="fixed-grid has-3-cols">
+    <div class="grid">
+        <a th:href="|/sport/${sport.getId()}|" class="card cell is-clickable" th:each="sport : ${sports}">
+            <header class="card-header">
+                <p class="card-header-title" th:text="${sport.getName()}"></p>
+            </header>
+            <div class="card-content">
+                <p>TBD</p>
+            </div>
+        </a>
+    </div>
+</section>
+</body>
+</html>

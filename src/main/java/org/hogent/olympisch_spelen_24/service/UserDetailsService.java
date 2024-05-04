@@ -22,7 +22,7 @@ public class UserDetailsService implements org.springframework.security.core.use
     private UserRepository userRepository;
 
     private Collection<? extends GrantedAuthority> convertAuthorities(Role role) {
-        return Collections.singletonList(new SimpleGrantedAuthority(role.name()));
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role.name()));
     };
 
     @Override
@@ -31,6 +31,6 @@ public class UserDetailsService implements org.springframework.security.core.use
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),convertAuthorities(user.getRole()));
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), convertAuthorities(user.getRole()));
     }
 }
