@@ -67,6 +67,7 @@
             </div>
             <p class="help is-danger" th:if="${#fields.hasErrors('disciplines')}" th:errors="*{disciplines}"></p>
         </div>
+        <input class="is-hidden" name="sport" th:value="${sport_id}">
         <div class="is-grouped">
             <a class="button is-danger" th:href="|/sport/${sport_id}|">Cancel</a>
             <button class="button is-success" type="submit">Create</button>

@@ -1,6 +1,7 @@
 package org.hogent.olympisch_spelen_24.controller;
 
 import org.hogent.olympisch_spelen_24.domain.Sport;
+import org.hogent.olympisch_spelen_24.repository.CompetitionRepository;
 import org.hogent.olympisch_spelen_24.repository.SportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -19,6 +20,8 @@ import java.util.Optional;
 public class SportController {
     @Autowired
     private SportRepository sportRepository;
+    @Autowired
+    private CompetitionRepository competitionRepository;
 
     @GetMapping
     public String getAll(Model model) {

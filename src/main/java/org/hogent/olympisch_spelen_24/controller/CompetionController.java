@@ -42,11 +42,12 @@ public class CompetionController {
     public String newCompetion(@PathVariable("sport_id") long sportId, Model model) {
         Optional<Sport> sport = sportRepository.findById(sportId);
 
-        if (!sport.isPresent()) {
+        if (sport.isEmpty()) {
             return "redirect:/404";
         }
 
         Competition competition = new Competition();
+        competition.setSport(sport.get());
 
         Iterable<Stadium> stadiums = stadiumRepository.findAll();
         model.addAttribute("stadiums", stadiums);
@@ -68,7 +69,7 @@ public class CompetionController {
         if (result.hasErrors()) {
             Optional<Sport> sport = sportRepository.findById(sportId);
 
-            if (!sport.isPresent()) {
+            if (sport.isEmpty()) {
                 return "redirect:/404";
             }
 

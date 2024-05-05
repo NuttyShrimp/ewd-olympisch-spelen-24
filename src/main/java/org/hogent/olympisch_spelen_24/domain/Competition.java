@@ -31,7 +31,6 @@ public class Competition {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime time;
 
-    @NumberFormat(pattern="#,##0.00")
     @Min(0)
     @Max(150)
     @Positive
@@ -42,6 +41,10 @@ public class Competition {
     @Max(49)
     @NotNull
     private Long places;
+
+    @ManyToOne
+    @NotNull
+    private Sport sport;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @NotNull

@@ -12,6 +12,28 @@
         <a th:href="|/competition/${sport.getId()}/new|" sec:authorize="hasRole('ADMIN')" class="button is-primary">Create</a>
     </div>
     <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Event start</th>
+                    <th>Stadium</th>
+                    <th>Discipline(s)</th>
+                    <th>Places left</th>
+                    <th sec:authorize="hasRole('ROLE_ADMIN')">Ticker price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="comp : ${sport.getCompetitions()}">
+                    <td th:text="${sport.getName()}"></td>
+                    <td th:text="${#temporals.format(comp.time)}"></td>
+                    <td th:text="${comp.stadium.getName()}"></td>
+                    <td th:text="${comp.disciplines}"></td>
+                    <td th:text="${comp.places}"></td>
+                    <td sec:authorize="hasRole('ROLE_ADMIN')" th:text="${#numbers.formatDecimal(comp.price, 1, 2)}"></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </section>
 </body>
