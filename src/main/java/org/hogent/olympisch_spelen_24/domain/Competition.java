@@ -61,7 +61,7 @@ public class Competition {
         StringBuilder sb = new StringBuilder();
         disciplines.forEach(discipline -> sb.append(discipline.getName()).append(", "));
         if (!sb.isEmpty()) {
-            sb.deleteCharAt(sb.length() - 1);
+            sb.delete(sb.length() - 2, sb.length() - 1);
         }
         return sb.toString();
     }
