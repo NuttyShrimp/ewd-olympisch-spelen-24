@@ -29,11 +29,11 @@
                 <td th:text="${sport.getName()}"></td>
                 <td th:text="${#temporals.format(comp.time)}"></td>
                 <td th:text="${comp.stadium.getName()}"></td>
-                <td th:text="${comp.disciplines}"></td>
+                <td th:text="${comp.getDisciplineNames()}"></td>
                 <td th:text="${placesLeft.get(comp.getOlympicNr1())}"></td>
                 <td th:if="${#authorization.expr('hasRole(''ROLE_ADMIN'')') || placesLeft.get(comp.getOlympicNr1()) > 0}"
                     th:text="${#numbers.formatDecimal(comp.price, 1, 2)}"></td>
-                <td th:if="${#authorization.expr('hasRole(''ROLE_USER'')') && placesLeft.get(comp.getOlympicNr1()) > 0}"><a th:href="|/ticket/${sport.getId()}|"
+                <td th:if="${#authorization.expr('hasRole(''ROLE_USER'')') && placesLeft.get(comp.getOlympicNr1()) > 0}"><a th:href="|/ticket/${comp.getOlympicNr1()}|"
                                                              class="button is-info">Buy tickets</a></td>
             </tr>
             </tbody>

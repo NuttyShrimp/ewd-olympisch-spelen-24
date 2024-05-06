@@ -25,9 +25,8 @@ public class SportController {
     private CompetitionService competitionService;
 
     @GetMapping
-    public String getAll(Model model, Principal principal) {
+    public String getAll(Model model) {
         Iterable<Sport> sports = sportRepository.findAll();
-        System.out.println();
 
         model.addAttribute("sports", sports);
 

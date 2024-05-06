@@ -50,6 +50,6 @@ public class TicketController {
 
         ticketService.createNew(ticket);
 
-        return String.format("sport/%d", competition.get().getSport().getId());
+        return String.format("redirect:/sport/%d", competition.get().getSport().getId());
     }
 }
