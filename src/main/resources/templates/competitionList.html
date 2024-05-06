@@ -14,24 +14,28 @@
     <div>
         <table class="table">
             <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Event start</th>
-                    <th>Stadium</th>
-                    <th>Discipline(s)</th>
-                    <th>Places left</th>
-                    <th sec:authorize="hasRole('ROLE_ADMIN')">Ticker price</th>
-                </tr>
+            <tr>
+                <th>Name</th>
+                <th>Event start</th>
+                <th>Stadium</th>
+                <th>Discipline(s)</th>
+                <th>Places left</th>
+                <th sec:authorize="hasRole('ROLE_ADMIN')">Ticker price</th>
+                <th></th>
+            </tr>
             </thead>
             <tbody>
-                <tr th:each="comp : ${sport.getCompetitions()}">
-                    <td th:text="${sport.getName()}"></td>
-                    <td th:text="${#temporals.format(comp.time)}"></td>
-                    <td th:text="${comp.stadium.getName()}"></td>
-                    <td th:text="${comp.disciplines}"></td>
-                    <td th:text="${comp.places}"></td>
-                    <td sec:authorize="hasRole('ROLE_ADMIN')" th:text="${#numbers.formatDecimal(comp.price, 1, 2)}"></td>
-                </tr>
+            <tr th:each="comp : ${sport.getCompetitions()}">
+                <td th:text="${sport.getName()}"></td>
+                <td th:text="${#temporals.format(comp.time)}"></td>
+                <td th:text="${comp.stadium.getName()}"></td>
+                <td th:text="${comp.disciplines}"></td>
+                <td th:text="${placesLeft.get(comp.getOlympicNr1())}"></td>
+                <td th:if="${#authorization.expr('hasRole(''ROLE_ADMIN'')') || placesLeft.get(comp.getOlympicNr1()) > 0}"
+                    th:text="${#numbers.formatDecimal(comp.price, 1, 2)}"></td>
+                <td th:if="${#authorization.expr('hasRole(''ROLE_USER'')') && placesLeft.get(comp.getOlympicNr1()) > 0}"><a th:href="|/ticket/${sport.getId()}|"
+                                                             class="button is-info">Buy tickets</a></td>
+            </tr>
             </tbody>
         </table>
     </div>

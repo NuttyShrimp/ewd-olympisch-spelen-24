@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Buy Tickets - Olympics 2024</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <h1 class="is-size-4 has-text-weight-bold" th:text="|${competition.sport.getName()} - ${competition.getDisciplineNames()}|"></h1>
+    <form th:action="@{|/ticket/${comp_id}|}" th:object="${ticket}" method="post">
+        <div class="field">
+            <label class="label">Start time</label>
+            <div class="control">
+                <input class="input" type="number" th:field="*{count}" max="20" th:errorclass="is-danger"  >
+            </div>
+            <input class="is-hidden" th:field="*{user}" th:value="${#authentication.}">
+            <p class="help is-danger" th:if="${#fields.hasErrors('count')}" th:errors="*{count}"></p>
+        </div>
+    </form>
+</section>
+</body>
+</html>

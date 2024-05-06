@@ -10,6 +10,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -32,8 +33,8 @@ public class InitDataConfig implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         // region Users
-        User user = new User(1L, "user", pwEncoder.encode("password"), Role.USER);
-        User admin = new User(2L, "admin", pwEncoder.encode("admin"), Role.ADMIN);
+        User user = new User(1L, "user", pwEncoder.encode("password"), Role.USER, new HashSet<>());
+        User admin = new User(2L, "admin", pwEncoder.encode("admin"), Role.ADMIN, new HashSet<>());
 
         userRepository.saveAll(List.of(user, admin));
         // endregion

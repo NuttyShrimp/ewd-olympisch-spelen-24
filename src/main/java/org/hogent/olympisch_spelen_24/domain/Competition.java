@@ -53,4 +53,16 @@ public class Competition {
     @ManyToMany
     @Size(max = 2)
     private Set<Discipline> disciplines = new HashSet<>();
+
+    @OneToMany(mappedBy = "competition")
+    private Set<Ticket> tickets = new HashSet<>();
+
+    public String getDisciplineNames() {
+        StringBuilder sb = new StringBuilder();
+        disciplines.forEach(discipline -> sb.append(discipline.getName()).append(", "));
+        if (!sb.isEmpty()) {
+            sb.deleteCharAt(sb.length() - 1);
+        }
+        return sb.toString();
+    }
 }

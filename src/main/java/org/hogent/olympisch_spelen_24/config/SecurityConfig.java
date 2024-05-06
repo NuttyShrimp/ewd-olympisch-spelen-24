@@ -26,16 +26,17 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.csrfTokenRepository(new HttpSessionCsrfTokenRepository()))
                 .authorizeHttpRequests(requests ->
-                    requests.requestMatchers("/login**").permitAll()
-                            .requestMatchers("/css**").permitAll()
-                            .requestMatchers("/403**").permitAll()
-                            .requestMatchers("/**").authenticated()
+                        requests.requestMatchers("/login**").permitAll()
+                                .requestMatchers("/css**").permitAll()
+                                .requestMatchers("/403**").permitAll()
+                                .requestMatchers("/ticket/**").hasRole("USER")
+                                .requestMatchers("/**").authenticated()
                 )
                 .formLogin(form ->
-                    form.defaultSuccessUrl("/")
-                            .loginPage("/login")
-                            .usernameParameter("username")
-                            .passwordParameter("password")
+                        form.defaultSuccessUrl("/")
+                                .loginPage("/login")
+                                .usernameParameter("username")
+                                .passwordParameter("password")
                 )
                 .exceptionHandling().accessDeniedPage("/403");
         return http.build();
