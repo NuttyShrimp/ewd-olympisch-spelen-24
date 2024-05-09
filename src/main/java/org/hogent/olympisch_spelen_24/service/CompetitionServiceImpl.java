@@ -16,6 +16,11 @@ public class CompetitionServiceImpl implements CompetitionService {
     @Autowired
     CompetitionRepository competitionRepository;
 
+
+    public List<Competition> getCompetitionsForSport(Long sportId) {
+        return competitionRepository.findBySport_Id(sportId).stream().toList();
+    }
+
     @Override
     public void saveNew(Competition competition) {
         if (competitionRepository.existsById(competition.getOlympicNr1())) {
@@ -24,12 +29,17 @@ public class CompetitionServiceImpl implements CompetitionService {
         competitionRepository.save(competition);
     }
 
-    public Map<Long, Long> getPlacesLeft(Long sportId) {
-        List<CompetitionPlaceInfo> placeInfoList = competitionRepository.findBySport_Id(sportId);
+    public Map<Long, Long> getPlacesForAll(Long sportId) {
+        List<CompetitionPlaceInfo> placeInfoList = competitionRepository.findCompetitionPlaceInfoBySport_Id(sportId);
         Map<Long, Long> placesLeft = new HashMap<>();
-        for(CompetitionPlaceInfo placeInfo : placeInfoList) {
+        for (CompetitionPlaceInfo placeInfo : placeInfoList) {
             placesLeft.put(placeInfo.getOlympicNr1(), placeInfo.getPlaces() - placeInfo.getTickets().size());
         }
         return placesLeft;
+    }
+
+    public Long getPlaces(Long competitionId) {
+        CompetitionPlaceInfo placeInfo = competitionRepository.findCompetitionPlaceInfoByOlympicNr1(competitionId);
+        return placeInfo.getPlaces() - placeInfo.getTickets().size();
     }
 }

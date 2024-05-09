@@ -1,5 +1,6 @@
 package org.hogent.olympisch_spelen_24.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +24,8 @@ public class Discipline {
   @ManyToOne
   private Sport sport;
 
-  @ManyToMany
+  @JsonBackReference
+  @ManyToMany(fetch = FetchType.LAZY)
   private Set<Competition> competitions = new HashSet<>();
 
   public Discipline(String name, Sport sport) {

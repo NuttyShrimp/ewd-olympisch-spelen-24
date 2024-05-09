@@ -1,5 +1,7 @@
 package org.hogent.olympisch_spelen_24.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
@@ -42,20 +44,34 @@ public class Competition {
     @NotNull
     private Long places;
 
-    @ManyToOne
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
     @NotNull
     private Sport sport;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonManagedReference
+    @ManyToOne(fetch = FetchType.EAGER)
     @NotNull
     private Stadium stadium;
 
+    @JsonManagedReference
     @ManyToMany
     @Size(max = 2)
     private Set<Discipline> disciplines = new HashSet<>();
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "competition")
     private Set<Ticket> tickets = new HashSet<>();
+
+    public Competition(Long olympicNr1, Long olympicNr2, LocalDateTime time, Double price, Long places, Sport sport, Stadium stadium) {
+        this.olympicNr1 = olympicNr1;
+        this.olympicNr2 = olympicNr2;
+        this.time = time;
+        this.price = price;
+        this.places = places;
+        this.sport = sport;
+        this.stadium = stadium;
+    }
 
     public String getDisciplineNames() {
         StringBuilder sb = new StringBuilder();

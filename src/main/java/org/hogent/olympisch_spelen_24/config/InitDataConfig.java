@@ -1,15 +1,13 @@
 package org.hogent.olympisch_spelen_24.config;
 
 import org.hogent.olympisch_spelen_24.domain.*;
-import org.hogent.olympisch_spelen_24.repository.DisciplineRepository;
-import org.hogent.olympisch_spelen_24.repository.SportRepository;
-import org.hogent.olympisch_spelen_24.repository.StadiumRepository;
-import org.hogent.olympisch_spelen_24.repository.UserRepository;
+import org.hogent.olympisch_spelen_24.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Stream;
@@ -23,6 +21,9 @@ public class InitDataConfig implements CommandLineRunner {
 
     @Autowired
     private SportRepository sportRepository;
+
+    @Autowired
+    private CompetitionRepository competitionRepository;
 
     @Autowired
     private StadiumRepository stadiumRepository;
@@ -41,7 +42,6 @@ public class InitDataConfig implements CommandLineRunner {
 
         List<Sport> sports = Stream.of("Golf", "Hockey", "Shooting", "Athletics", "Rowing", "Cycling Road").map(Sport::new).toList();
         sportRepository.saveAll(sports);
-
 
         // region Stadiums
         List<Stadium> stadiums = Stream.of(
@@ -137,5 +137,8 @@ public class InitDataConfig implements CommandLineRunner {
         ).map(d -> new Discipline(d, sports.get(3)));
         disciplineRepository.saveAll(Stream.concat(disciplines, athleticDisciplines).toList());
         // endregion
+
+        Competition comp = new Competition(12345L, 12355L, LocalDateTime.of(2024, 8, 1, 12, 0), 10d, 20L, sports.getFirst(), stadiums.getFirst());
+        competitionRepository.save(comp);
     }
 }

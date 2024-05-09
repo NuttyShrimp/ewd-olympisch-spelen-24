@@ -1,5 +1,6 @@
 package org.hogent.olympisch_spelen_24.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,7 @@ public class Stadium {
 
     private String name;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "stadium")
     private Set<Competition> competitions;
 

@@ -1,5 +1,6 @@
 package org.hogent.olympisch_spelen_24.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,10 +20,12 @@ public class Sport implements Serializable {
 
     private String name;
 
-    @OneToMany(mappedBy = "sport")
+    @JsonManagedReference
+    @OneToMany(mappedBy = "sport", fetch = FetchType.LAZY)
     private Set<Discipline> disciplines;
 
-    @OneToMany(mappedBy = "sport")
+    @JsonManagedReference
+    @OneToMany(mappedBy = "sport", fetch = FetchType.LAZY)
     private Set<Competition> competitions;
 
     public Sport(String name) {

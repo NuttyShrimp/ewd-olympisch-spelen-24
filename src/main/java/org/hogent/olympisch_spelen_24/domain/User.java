@@ -1,5 +1,6 @@
 package org.hogent.olympisch_spelen_24.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,6 +29,7 @@ public class User {
     @Column(nullable = false)
     private Role role;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "user")
     private Set<Ticket> tickets = new HashSet<>();
 }
