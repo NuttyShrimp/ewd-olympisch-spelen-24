@@ -23,6 +23,10 @@
         </div>
     </div>
 </header>
+<div class="px-4" th:if="${notification}">
+    <div class="notification is-success is-light" th:text="${notification}">
+    </div>
+</div>
 <section class="container px-4" layout:fragment="content">
     <p>Page content goes here</p>
 </section>
