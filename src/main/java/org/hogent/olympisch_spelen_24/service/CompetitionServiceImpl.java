@@ -1,6 +1,7 @@
 package org.hogent.olympisch_spelen_24.service;
 
 import org.hogent.olympisch_spelen_24.domain.Competition;
+import org.hogent.olympisch_spelen_24.exceptions.CompetitionNotFoundException;
 import org.hogent.olympisch_spelen_24.exceptions.DuplicateCompetitionException;
 import org.hogent.olympisch_spelen_24.repository.CompetitionPlaceInfo;
 import org.hogent.olympisch_spelen_24.repository.CompetitionRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class CompetitionServiceImpl implements CompetitionService {
@@ -19,6 +21,14 @@ public class CompetitionServiceImpl implements CompetitionService {
 
     public List<Competition> getCompetitionsForSport(Long sportId) {
         return competitionRepository.findBySport_Id(sportId).stream().toList();
+    }
+
+    public Competition getById(Long id) {
+        Optional<Competition> competition = competitionRepository.findById(id);
+        if (competition.isEmpty()) {
+            throw new CompetitionNotFoundException(id);
+        }
+        return competition.get();
     }
 
     @Override

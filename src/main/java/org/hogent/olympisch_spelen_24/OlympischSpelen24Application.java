@@ -1,12 +1,10 @@
 package org.hogent.olympisch_spelen_24;
 
-import org.hogent.olympisch_spelen_24.config.SecurityConfig;
 import org.hogent.olympisch_spelen_24.utils.CompetitionValidation;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;

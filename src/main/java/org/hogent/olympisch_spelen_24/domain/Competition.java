@@ -4,9 +4,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
@@ -17,16 +16,22 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "competitions")
 public class Competition {
     @Id
     @NotNull
     @NumberFormat(pattern = "#####")
+    @Min(10000)
+    @Max(99999)
     private Long olympicNr1;
 
     @NotNull
     @NumberFormat(pattern = "#####")
+    @Min(10000)
+    @Max(99999)
     private Long olympicNr2;
 
     @NotNull
@@ -45,22 +50,25 @@ public class Competition {
     private Long places;
 
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @NotNull
     private Sport sport;
 
     @JsonManagedReference
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @NotNull
     private Stadium stadium;
 
     @JsonManagedReference
+    @Builder.Default
     @ManyToMany
     @Size(max = 2)
+    @UniqueElements
     private Set<Discipline> disciplines = new HashSet<>();
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "competition")
+    @Builder.Default
+    @OneToMany(mappedBy = "competition", cascade = CascadeType.REMOVE)
     private Set<Ticket> tickets = new HashSet<>();
 
     public Competition(Long olympicNr1, Long olympicNr2, LocalDateTime time, Double price, Long places, Sport sport, Stadium stadium) {

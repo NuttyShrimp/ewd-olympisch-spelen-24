@@ -7,6 +7,7 @@ import java.util.Map;
 
 public interface CompetitionService {
     List<Competition> getCompetitionsForSport(Long sportId);
+    Competition getById(Long id);
     void saveNew(Competition competition);
     // Get for each competition the places/tickets left
     Map<Long, Long> getPlacesForAll(Long sportId);

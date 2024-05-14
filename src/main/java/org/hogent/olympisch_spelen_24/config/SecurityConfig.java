@@ -31,6 +31,7 @@ public class SecurityConfig {
                                 .requestMatchers("/403**").permitAll()
                                 .requestMatchers("/api/**").permitAll()
                                 .requestMatchers("/ticket/**").hasRole("USER")
+                                .requestMatchers("/competition/**").hasRole("ADMIN")
                                 .requestMatchers("/**").authenticated()
                 )
                 .formLogin(form ->

@@ -10,9 +10,7 @@ import org.springframework.context.annotation.Import;
 @AutoConfigureMockMvc
 @Import(SecurityConfig.class)
 class OlympischSpelen24ApplicationTests {
-
     @Test
     void contextLoads() {
     }
-
 }

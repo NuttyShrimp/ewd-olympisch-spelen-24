@@ -25,7 +25,7 @@ public class Discipline {
   private Sport sport;
 
   @JsonBackReference
-  @ManyToMany(fetch = FetchType.LAZY)
+  @ManyToMany
   private Set<Competition> competitions = new HashSet<>();
 
   public Discipline(String name, Sport sport) {

@@ -21,11 +21,11 @@ public class Sport implements Serializable {
     private String name;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "sport", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "sport")
     private Set<Discipline> disciplines;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "sport", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "sport", cascade = CascadeType.REMOVE)
     private Set<Competition> competitions;
 
     public Sport(String name) {

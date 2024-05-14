@@ -20,6 +20,6 @@ public class UserPrincipal extends org.springframework.security.core.userdetails
 
     private static Collection<? extends GrantedAuthority> convertAuthorities(Role role) {
         return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role.name()));
-    };
+    }
 
 }

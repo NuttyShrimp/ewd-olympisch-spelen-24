@@ -30,6 +30,6 @@ public class User {
     private Role role;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private Set<Ticket> tickets = new HashSet<>();
 }

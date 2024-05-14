@@ -31,15 +31,19 @@ public class CompetitionValidation implements Validator {
         LocalTime startTime = startDateTime.toLocalTime();
         if (startDate.isBefore(EARLIEST_START_DATE)) {
             errors.rejectValue("time", "dateTooEarly.Competition.time", String.format("The competition date should start after %s", EARLIEST_START_DATE));
+            return;
         }
         if (startDate.isAfter(LATEST_START_DATE)) {
             errors.rejectValue("time", "dateTooLate.Competition.time", String.format("The competition date should start before %s", LATEST_START_DATE));
+            return;
         }
         if (startTime.isBefore(EARLIEST_START_TIME)) {
             errors.rejectValue("time", "timeTooEarly.Competition.time", String.format("The competition time should start after %s", EARLIEST_START_TIME));
+            return;
         }
         if (startTime.isAfter(LATEST_START_TIME)) {
             errors.rejectValue("time", "timeTooLate.Competition.time", String.format("The competition time should start before %s", EARLIEST_START_TIME));
+            return;
         }
 
         // Olympicnr1 validation
@@ -49,16 +53,14 @@ public class CompetitionValidation implements Validator {
         }
         if (String.valueOf(olympicNr1).toString().length() != 5) {
             errors.rejectValue("olympicNr1", "length.Competition.olympicNr1", "Olympic Nr 1 should be exactly 5 characters");
-        }
-        // Shouldn't start with a zero(0)
-        if (olympicNr1 < 10000) {
-            errors.rejectValue("olympicNr1", "startWithZero.Competition.olympicNr1", "Olympic Nr 1 may not start with a zero(0)");
+            return;
         }
         // First and last digit should differ
         long olympicNr1Digit1 = (olympicNr1 - (olympicNr1 % 10000)) / 10000;
         long olympicNr1Digit5 = olympicNr1 % 10;
         if (olympicNr1Digit1 == olympicNr1Digit5) {
             errors.rejectValue("olympicNr1", "sameOuterDigits.Competition.olympicNr1", "Olympic Nr 1 may not start and end with the same digit");
+            return;
         }
 
         // Olympicnr2 validation
@@ -69,6 +71,7 @@ public class CompetitionValidation implements Validator {
         // Should be in between olympicnr1 - 1000 & olympicnr1 + 1000
         if (olympicNr2 < olympicNr1 - 1000) {
             errors.rejectValue("olympicNr2", "tooSmall.Competition.olympicNr2", "Olympic Nr 2 should be within a range of 1000 of the olympicNr1");
+            return;
         }
         if (olympicNr2 > olympicNr1 + 1000) {
             errors.rejectValue("olympicNr2", "tooLarge.Competition.olympicNr2", "Olympic Nr 2 should be within a range of 1000 of the olympicNr1");
