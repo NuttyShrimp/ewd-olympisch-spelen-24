@@ -10,6 +10,7 @@ import org.hogent.olympisch_spelen_24.repository.DisciplineRepository;
 import org.hogent.olympisch_spelen_24.repository.SportRepository;
 import org.hogent.olympisch_spelen_24.repository.StadiumRepository;
 import org.hogent.olympisch_spelen_24.service.CompetitionService;
+import org.hogent.olympisch_spelen_24.service.SportService;
 import org.hogent.olympisch_spelen_24.utils.CompetitionValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +27,7 @@ import java.util.Optional;
 @RequestMapping("/competition")
 public class CompetionController {
     @Autowired
-    SportRepository sportRepository;
+    SportService sportService;
     @Autowired
     CompetitionRepository competitionRepository;
     @Autowired
@@ -40,14 +41,10 @@ public class CompetionController {
 
     @GetMapping("/{sport_id}/new")
     public String newCompetion(@PathVariable("sport_id") long sportId, Model model) {
-        Optional<Sport> sport = sportRepository.findById(sportId);
-
-        if (sport.isEmpty()) {
-            return "redirect:/404";
-        }
+        Sport sport = sportService.getById(sportId);
 
         Competition competition = new Competition();
-        competition.setSport(sport.get());
+        competition.setSport(sport);
 
         Iterable<Stadium> stadiums = stadiumRepository.findAll();
         model.addAttribute("stadiums", stadiums);
@@ -64,14 +61,9 @@ public class CompetionController {
     public String newCompetion(@PathVariable("sport_id") long sportId, @Valid Competition competition, BindingResult result, Model model) {
         competitionValidation.validate(competition, result);
 
-        // TODO: check if competition with same olympicnr1 exists in DB (should not happen in validator)
-
         if (result.hasErrors()) {
-            Optional<Sport> sport = sportRepository.findById(sportId);
-
-            if (sport.isEmpty()) {
-                return "redirect:/404";
-            }
+            // Check if sport exists
+            sportService.getById(sportId);
 
             Iterable<Stadium> stadiums = stadiumRepository.findAll();
             model.addAttribute("stadiums", stadiums);

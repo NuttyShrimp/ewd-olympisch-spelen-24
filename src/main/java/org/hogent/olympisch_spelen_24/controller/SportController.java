@@ -1,8 +1,8 @@
 package org.hogent.olympisch_spelen_24.controller;
 
 import org.hogent.olympisch_spelen_24.domain.Sport;
-import org.hogent.olympisch_spelen_24.repository.SportRepository;
 import org.hogent.olympisch_spelen_24.service.CompetitionService;
+import org.hogent.olympisch_spelen_24.service.SportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -18,13 +18,13 @@ import java.util.Optional;
 @RequestMapping("/sport")
 public class SportController {
     @Autowired
-    private SportRepository sportRepository;
+    private SportService sportService;
     @Autowired
     private CompetitionService competitionService;
 
     @GetMapping
     public String getAll(Model model) {
-        Iterable<Sport> sports = sportRepository.findAll();
+        Iterable<Sport> sports = sportService.getAll();
 
         model.addAttribute("sports", sports);
 
@@ -33,17 +33,12 @@ public class SportController {
 
     @GetMapping("/{id}")
     public String getCompetitions(@PathVariable Long id, Model model, Authentication authentication) {
-        Optional<Sport> sport = sportRepository.findById(id);
-
-        if (sport.isEmpty()) {
-            // TODO: throw error instead of redirect
-            return "redirect:/404";
-        }
+        Sport sport = sportService.getById(id);
 
         Map<Long, Long> placesLeft = competitionService.getPlacesForAll(id);
 
         model.addAttribute("placesLeft", placesLeft);
-        model.addAttribute("sport", sport.get());
+        model.addAttribute("sport", sport);
 
         return "competitionList";
     }
