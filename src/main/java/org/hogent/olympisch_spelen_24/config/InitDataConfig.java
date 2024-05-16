@@ -34,8 +34,8 @@ public class InitDataConfig implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         // region Users
-        User user = new User(1L, "user", pwEncoder.encode("password"), Role.USER, new HashSet<>());
-        User admin = new User(2L, "admin", pwEncoder.encode("admin"), Role.ADMIN, new HashSet<>());
+        AppUser user = new AppUser(1L, "user", pwEncoder.encode("password"), Role.USER, new HashSet<>());
+        AppUser admin = new AppUser(2L, "admin", pwEncoder.encode("admin"), Role.ADMIN, new HashSet<>());
 
         userRepository.saveAll(List.of(user, admin));
         // endregion

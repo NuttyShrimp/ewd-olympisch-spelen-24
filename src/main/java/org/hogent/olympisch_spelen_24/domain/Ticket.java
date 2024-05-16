@@ -19,7 +19,7 @@ public class Ticket {
     @JsonBackReference
     @ManyToOne
     @Id
-    private User user;
+    private AppUser user;
 
     @JsonBackReference
     @ManyToOne
