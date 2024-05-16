@@ -18,13 +18,11 @@ import lombok.Setter;
 public class Ticket {
     @JsonBackReference
     @ManyToOne
-    @NotNull
     @Id
     private User user;
 
     @JsonBackReference
     @ManyToOne
-    @NotNull
     @Id
     private Competition competition;
 

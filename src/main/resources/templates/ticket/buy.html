@@ -16,8 +16,6 @@
             </div>
             <p class="help is-danger" th:if="${#fields.hasErrors('count')}" th:errors="*{count}"></p>
         </div>
-        <input class="is-hidden" name="user" th:value="${#authentication.principal.getUser().getId()}">
-        <input class="is-hidden" name="competition" th:value="${comp_id}">
         <div class="is-grouped">
             <a class="button is-danger" th:href="|/sport/${competition.getSport().getId()}|">Cancel</a>
             <button class="button is-success">Buy</button>

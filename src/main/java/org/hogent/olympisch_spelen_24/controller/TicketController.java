@@ -6,6 +6,8 @@ import org.hogent.olympisch_spelen_24.repository.CompetitionRepository;
 import org.hogent.olympisch_spelen_24.service.CompetitionService;
 import org.hogent.olympisch_spelen_24.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,12 +38,13 @@ public class TicketController {
     @PostMapping("/{comp_id}")
     public String buyTicket(@PathVariable Long comp_id, @Valid Ticket ticket, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         Competition competition = competitionService.getById(comp_id);
-
         if (result.hasErrors()) {
             model.addAttribute("competition", competition);
             return "ticket/buy";
         }
-        ticketService.createNew(ticket);
+        ticket.setCompetition(competition);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        ticketService.createNew(ticket, auth.getName());
 
         if (ticket.getCount() == 1) {
             redirectAttributes.addFlashAttribute("notification", String.format("Bought %d ticket", ticket.getCount()));
