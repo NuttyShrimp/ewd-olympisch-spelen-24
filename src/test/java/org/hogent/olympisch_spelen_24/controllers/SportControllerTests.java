@@ -4,7 +4,6 @@ import org.hogent.olympisch_spelen_24.config.SecurityConfig;
 import org.hogent.olympisch_spelen_24.controller.SportController;
 import org.hogent.olympisch_spelen_24.domain.Sport;
 import org.hogent.olympisch_spelen_24.exceptions.SportNotFoundException;
-import org.hogent.olympisch_spelen_24.repository.SportRepository;
 import org.hogent.olympisch_spelen_24.service.CompetitionService;
 import org.hogent.olympisch_spelen_24.service.SportService;
 import org.junit.jupiter.api.Test;
@@ -18,10 +17,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;

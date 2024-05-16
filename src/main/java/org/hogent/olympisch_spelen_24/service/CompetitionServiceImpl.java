@@ -3,6 +3,7 @@ package org.hogent.olympisch_spelen_24.service;
 import org.hogent.olympisch_spelen_24.domain.Competition;
 import org.hogent.olympisch_spelen_24.exceptions.CompetitionNotFoundException;
 import org.hogent.olympisch_spelen_24.exceptions.DuplicateCompetitionException;
+import org.hogent.olympisch_spelen_24.exceptions.SportNotFoundException;
 import org.hogent.olympisch_spelen_24.repository.CompetitionPlaceInfo;
 import org.hogent.olympisch_spelen_24.repository.CompetitionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +18,16 @@ import java.util.Optional;
 public class CompetitionServiceImpl implements CompetitionService {
     @Autowired
     CompetitionRepository competitionRepository;
+    @Autowired
+    SportService sportService;
 
 
-    public List<Competition> getCompetitionsForSport(Long sportId) {
+    public List<Competition> getCompetitionsForSport(Long sportId) throws SportNotFoundException {
+        sportService.getById(sportId); // Check if sport exists (throws exception if not)
         return competitionRepository.findBySport_Id(sportId).stream().toList();
     }
 
-    public Competition getById(Long id) {
+    public Competition getById(Long id) throws CompetitionNotFoundException {
         Optional<Competition> competition = competitionRepository.findById(id);
         if (competition.isEmpty()) {
             throw new CompetitionNotFoundException(id);
@@ -32,7 +36,7 @@ public class CompetitionServiceImpl implements CompetitionService {
     }
 
     @Override
-    public void saveNew(Competition competition) {
+    public void saveNew(Competition competition) throws DuplicateCompetitionException {
         if (competitionRepository.existsById(competition.getOlympicNr1())) {
             throw new DuplicateCompetitionException(competition.getOlympicNr1());
         }
@@ -48,8 +52,11 @@ public class CompetitionServiceImpl implements CompetitionService {
         return placesLeft;
     }
 
-    public Long getPlaces(Long competitionId) {
+    public Long getPlaces(Long competitionId) throws CompetitionNotFoundException {
         CompetitionPlaceInfo placeInfo = competitionRepository.findCompetitionPlaceInfoByOlympicNr1(competitionId);
+        if (placeInfo == null) {
+            throw new CompetitionNotFoundException(competitionId);
+        }
         return placeInfo.getPlaces() - placeInfo.getTickets().size();
     }
 }
