@@ -28,7 +28,7 @@
             <tbody>
             <tr th:each="comp : ${sport.getCompetitions()}">
                 <td th:text="${sport.getName()}"></td>
-                <td th:text="${#temporals.format(comp.time)}"></td>
+                <td th:with="df=#{date.format.pattern}" th:text="${#temporals.format(comp.time, df)}"></td>
                 <td th:text="${comp.stadium.getName()}"></td>
                 <td th:text="${comp.getDisciplineNames()}"></td>
                 <td th:text="${placesLeft.get(comp.getOlympicNr1())}"></td>
@@ -50,8 +50,8 @@
                         </p>
                         <p th:case="*">
                             <span
-                                class="has-text-weight-semi-bold"
-                                th:text="${boughtTickets.get(comp.getOlympicNr1())}"
+                                    class="has-text-weight-semi-bold"
+                                    th:text="${boughtTickets.get(comp.getOlympicNr1())}"
                             ></span> tickets
                         </p>
                     </div>

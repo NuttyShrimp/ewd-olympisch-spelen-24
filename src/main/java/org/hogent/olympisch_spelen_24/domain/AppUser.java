@@ -3,10 +3,7 @@ package org.hogent.olympisch_spelen_24.domain;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 

@@ -3,8 +3,10 @@ package org.hogent.olympisch_spelen_24.domain;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
@@ -24,28 +26,23 @@ public class Competition {
     @Id
     @NotNull
     @NumberFormat(pattern = "#####")
-    @Min(10000)
-    @Max(99999)
+    @Range(min = 10000, max = 99999)
     private Long olympicNr1;
 
     @NotNull
     @NumberFormat(pattern = "#####")
-    @Min(10000)
-    @Max(99999)
+    @Range(min = 9000, max = 100999)
     private Long olympicNr2;
 
     @NotNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime time;
 
-    @Min(0)
-    @Max(150)
-    @Positive
+    @Range(min = 1, max = 149)
     @NotNull
     private Double price;
 
-    @Positive
-    @Max(49)
+    @Range(min = 1, max = 49)
     @NotNull
     private Long places;
 

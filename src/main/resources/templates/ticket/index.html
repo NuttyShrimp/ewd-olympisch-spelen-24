@@ -21,7 +21,7 @@
             <tr th:each="ticket : ${tickets}">
                 <td th:text="${ticket.competition.sport.name}"></td>
                 <td th:text="${ticket.competition.getDisciplineNames()}"></td>
-                <td th:text="${#temporals.format(ticket.competition.time)}"></td>
+                <td th:with="df=#{date.format.pattern}" th:text="${#temporals.format(ticket.competition.time, df")}"></td>
                 <td th:text="${ticket.count}"></td>
             </tr>
         </tbody>
