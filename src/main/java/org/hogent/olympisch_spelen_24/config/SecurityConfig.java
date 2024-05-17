@@ -28,7 +28,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(requests ->
                         requests.requestMatchers("/login**").permitAll()
                                 .requestMatchers("/css**").permitAll()
-                                .requestMatchers("/403**").permitAll()
+                                .requestMatchers("/error**").permitAll()
                                 .requestMatchers("/api/**").permitAll()
                                 .requestMatchers("/ticket/**").hasRole("USER")
                                 .requestMatchers("/competition/**").hasRole("ADMIN")
@@ -40,7 +40,7 @@ public class SecurityConfig {
                                 .usernameParameter("username")
                                 .passwordParameter("password")
                 )
-                .exceptionHandling().accessDeniedPage("/403");
+                .exceptionHandling().accessDeniedPage("/error/403");
         return http.build();
     }
 }

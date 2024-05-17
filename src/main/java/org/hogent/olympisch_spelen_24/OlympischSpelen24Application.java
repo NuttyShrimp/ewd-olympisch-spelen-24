@@ -26,6 +26,5 @@ public class OlympischSpelen24Application implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addRedirectViewController("/", "/sport");
-        registry.addViewController("/403").setViewName("403");
     }
 }
