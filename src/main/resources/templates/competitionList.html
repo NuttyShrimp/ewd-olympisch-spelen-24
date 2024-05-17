@@ -20,7 +20,8 @@
                 <th>Stadium</th>
                 <th>Discipline(s)</th>
                 <th>Places left</th>
-                <th sec:authorize="hasRole('ROLE_ADMIN')">Ticker price</th>
+                <th>Ticker price</th>
+                <th sec:authorize="hasRole('ROLE_USER')">Tickets bought</th>
                 <th></th>
             </tr>
             </thead>
@@ -31,10 +32,33 @@
                 <td th:text="${comp.stadium.getName()}"></td>
                 <td th:text="${comp.getDisciplineNames()}"></td>
                 <td th:text="${placesLeft.get(comp.getOlympicNr1())}"></td>
-                <td th:if="${#authorization.expr('hasRole(''ROLE_ADMIN'')') || placesLeft.get(comp.getOlympicNr1()) > 0}"
-                    th:text="${#numbers.formatDecimal(comp.price, 1, 2)}"></td>
-                <td th:if="${#authorization.expr('hasRole(''ROLE_USER'')') && placesLeft.get(comp.getOlympicNr1()) > 0}"><a th:href="|/ticket/${comp.getOlympicNr1()}|"
-                                                             class="button is-info">Buy tickets</a></td>
+                <td>
+                    <p
+                            th:if="${#authorization.expr('hasRole(''ROLE_ADMIN'')') || placesLeft.get(comp.getOlympicNr1()) > 0}"
+                            th:text="${#numbers.formatDecimal(comp.price, 1, 2)}">
+                        ></p>
+                </td>
+                <td>
+                    <div
+                            th:if="${#authorization.expr('hasRole(''ROLE_USER'')') && boughtTickets.getOrDefault(comp.getOlympicNr1(), 0) > 0}"
+                            th:switch="${boughtTickets.get(comp.getOlympicNr1())}"
+                    >
+                        <p th:case="0">
+                        </p>
+                        <p th:case="1">
+                            <span class="has-text-weight-semi-bold">1</span> ticket
+                        </p>
+                        <p th:case="*">
+                            <span
+                                class="has-text-weight-semi-bold"
+                                th:text="${boughtTickets.get(comp.getOlympicNr1())}"
+                            ></span> tickets
+                        </p>
+                    </div>
+                </td>
+                <td th:if="${#authorization.expr('hasRole(''ROLE_USER'')') && placesLeft.get(comp.getOlympicNr1()) > 0}">
+                    <a th:href="|/ticket/${comp.getOlympicNr1()}|" class="button is-info">Buy tickets</a>
+                </td>
             </tr>
             </tbody>
         </table>

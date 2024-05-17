@@ -10,6 +10,10 @@ import org.hogent.olympisch_spelen_24.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @Service
 public class TicketServiceImpl implements TicketService {
     private final long MAX_TICKET_COUNT_PER_COMP = 20;
@@ -20,6 +24,7 @@ public class TicketServiceImpl implements TicketService {
     @Autowired
     private UserRepository userRepository;
 
+    @Override
     public void createNew(Ticket newTicket, String username) throws UserNotFoundException, MaxTicketsPerCompReached, MaxTotalTicketsReached {
         AppUser user = userRepository.findByUsername(username);
         if (user == null) {
@@ -47,5 +52,20 @@ public class TicketServiceImpl implements TicketService {
         }
 
         ticketRepository.save(newTicket);
+    }
+
+    @Override
+    public Map<Long, Long> getTicketCount(Long sportId, String name) {
+        List<Ticket> ticketCounts = ticketRepository.findByUser_UsernameAndCompetition_Sport_Id(name, sportId);
+        Map<Long, Long> ticketMap = new HashMap<>();
+        for (Ticket ticket : ticketCounts) {
+            ticketMap.put(ticket.getCompetition().getOlympicNr1(), ticket.getCount());
+        }
+        return ticketMap;
+    }
+
+    @Override
+    public boolean hasBoughtTickets(String name) {
+        return ticketRepository.existsByUser_Username(name);
     }
 }

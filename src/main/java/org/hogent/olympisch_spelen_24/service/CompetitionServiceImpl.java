@@ -1,6 +1,7 @@
 package org.hogent.olympisch_spelen_24.service;
 
 import org.hogent.olympisch_spelen_24.domain.Competition;
+import org.hogent.olympisch_spelen_24.domain.Ticket;
 import org.hogent.olympisch_spelen_24.exceptions.CompetitionNotFoundException;
 import org.hogent.olympisch_spelen_24.exceptions.DuplicateCompetitionException;
 import org.hogent.olympisch_spelen_24.exceptions.SportNotFoundException;
@@ -47,7 +48,7 @@ public class CompetitionServiceImpl implements CompetitionService {
         List<CompetitionPlaceInfo> placeInfoList = competitionRepository.findCompetitionPlaceInfoBySport_Id(sportId);
         Map<Long, Long> placesLeft = new HashMap<>();
         for (CompetitionPlaceInfo placeInfo : placeInfoList) {
-            placesLeft.put(placeInfo.getOlympicNr1(), placeInfo.getPlaces() - placeInfo.getTickets().size());
+            placesLeft.put(placeInfo.getOlympicNr1(), placeInfo.getPlaces() - placeInfo.getTickets().stream().mapToLong(Ticket::getCount).sum());
         }
         return placesLeft;
     }
