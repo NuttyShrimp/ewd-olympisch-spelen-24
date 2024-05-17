@@ -10,6 +10,7 @@ import org.hogent.olympisch_spelen_24.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,5 +68,20 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public boolean hasBoughtTickets(String name) {
         return ticketRepository.existsByUser_Username(name);
+    }
+
+    @Override
+    public List<Ticket> getAll(String name) {
+        List<Ticket> tickets = ticketRepository.findByUser_UsernameOrderByCompetition_Sport_NameAscCompetition_TimeAsc(name);
+        Map<Long, Ticket> mergedTickets = new HashMap<>();
+        for (Ticket ticket : tickets) {
+            if (mergedTickets.containsKey(ticket.getCompetition().getOlympicNr1())) {
+                Ticket mergedTicket = mergedTickets.get(ticket.getCompetition().getOlympicNr1());
+                mergedTicket.setCount(mergedTicket.getCount() + ticket.getCount());
+            } else {
+                mergedTickets.put(ticket.getCompetition().getOlympicNr1(), ticket);
+            }
+        }
+        return mergedTickets.values().stream().toList();
     }
 }

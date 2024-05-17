@@ -13,4 +13,6 @@ public interface TicketRepository extends CrudRepository<Ticket, Long> {
     boolean existsByUser_Username(String name);
 
     List<Ticket> findByUser_UsernameAndCompetition_Sport_Id(String username, Long id);
+
+    List<Ticket> findByUser_UsernameOrderByCompetition_Sport_NameAscCompetition_TimeAsc(String username);
 }

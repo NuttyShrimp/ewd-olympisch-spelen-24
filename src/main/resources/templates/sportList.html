@@ -6,17 +6,18 @@
     <title>Sport List - Olympics 2024</title>
 </head>
 <body>
-<section layout:fragment="content" class="fixed-grid has-3-cols">
+<section layout:fragment="content" class="fixed-grid has-3-cols container">
+    <div class="is-flex is-justify-content-space-between pb-2">
+        <h1 class="is-size-4 has-text-weight-bold">Sports</h1>
+        <div th:if="${#authorization.expr('hasRole(''ROLE_USER'')') && hasTickets}">
+            <a href="/ticket" class="button is-info">View tickets</a>
+        </div>
+    </div>
     <div class="grid">
         <a th:href="|/sport/${sport.getId()}|" class="card cell is-clickable" th:each="sport : ${sports}">
             <header class="card-header">
                 <p class="card-header-title" th:text="${sport.getName()}"></p>
             </header>
-            <div class="card-content">
-                <div th:if="${#authorization.expr('hasRole(''ROLE_USER'')') && hasTickets}">
-                    <a href="/ticket" class="button is-info">View tickets</a>
-                </div>
-            </div>
         </a>
     </div>
 </section>

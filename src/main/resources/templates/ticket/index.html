@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Sport List - Olympics 2024</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="is-flex is-justify-content-space-between">
+        <h1 class="is-size-4 has-text-weight-bold">Owned Tickets</h1>
+    </div>
+    <table class="table">
+        <thead>
+            <th>Sport</th>
+            <th>Disciplines</th>
+            <th>Datum</th>
+            <th>Tickets bought</th>
+        </thead>
+        <tbody>
+            <tr th:each="ticket : ${tickets}">
+                <td th:text="${ticket.competition.sport.name}"></td>
+                <td th:text="${ticket.competition.getDisciplineNames()}"></td>
+                <td th:text="${#temporals.format(ticket.competition.time)}"></td>
+                <td th:text="${ticket.count}"></td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+</body>
+</html>

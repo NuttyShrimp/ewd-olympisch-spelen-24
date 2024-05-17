@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -23,6 +24,20 @@ public class TicketController {
     private CompetitionService competitionService;
     @Autowired
     private TicketService ticketService;
+
+    @GetMapping("")
+    public String showAllTickets(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        List<Ticket> tickets = ticketService.getAll(auth.getName());
+
+        if (tickets.isEmpty()) {
+            return "redirect:/";
+        }
+
+        model.addAttribute("tickets", tickets);
+
+        return "ticket/index";
+    }
 
     @GetMapping("/{comp_id}")
     public String showTicketBuy(@PathVariable Long comp_id, Model model){
