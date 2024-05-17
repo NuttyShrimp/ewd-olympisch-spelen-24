@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -125,5 +126,22 @@ class TicketControllerTests {
                 .andExpect(model().hasErrors())
                 .andExpect(model().attributeHasErrors("ticket"))
                 .andExpect(model().attributeHasFieldErrors("ticket", "count"));
+    }
+
+    @Test
+    @WithMockUser(username = "user")
+    void testShowBoughTickets_returnsListInModel_shouldRedirect() throws Exception {
+        when(ticketService.getAll("user")).thenReturn(List.of(Ticket.builder().count(1L).competition(competition).build()));
+
+        mockMvc.perform(get("/ticket"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("tickets"));
+    }
+    @Test
+    @WithMockUser(username = "user")
+    void testShowBoughTickets_noTickets_shouldRedirect() throws Exception {
+        mockMvc.perform(get("/ticket"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/"));
     }
 }

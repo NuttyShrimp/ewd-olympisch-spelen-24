@@ -6,6 +6,7 @@ import org.hogent.olympisch_spelen_24.domain.Sport;
 import org.hogent.olympisch_spelen_24.exceptions.SportNotFoundException;
 import org.hogent.olympisch_spelen_24.service.CompetitionService;
 import org.hogent.olympisch_spelen_24.service.SportService;
+import org.hogent.olympisch_spelen_24.service.TicketService;
 import org.junit.jupiter.api.Test;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,9 @@ class SportControllerTests {
 
     @MockBean
     CompetitionService competitionService;
+
+    @MockBean
+    TicketService ticketService;
 
     @Test
     @WithMockUser(username = "user")
