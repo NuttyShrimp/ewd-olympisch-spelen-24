@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.validator.constraints.Range;
 
 @Getter
 @Setter
@@ -26,8 +27,7 @@ public class Ticket {
     @Id
     private Competition competition;
 
-    @Min(1)
-    @Max(20)
-    @NotNull
+    @Range(min = 1, max = 20, message = "{ticket.count.range}")
+    @NotNull(message = "{ticket.count.notNull}")
     private Long count;
 }
