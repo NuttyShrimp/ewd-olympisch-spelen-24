@@ -65,7 +65,7 @@ class SportControllerTests {
 
         mockMvc.perform(get("/sport/1"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("competitionList"))
+                .andExpect(view().name("competition/list"))
                 .andExpect(model().attributeExists("sport"))
                 .andExpect(model().attribute("sport", sport));
     }

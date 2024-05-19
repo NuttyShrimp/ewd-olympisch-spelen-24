@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Map;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/sport")
@@ -52,6 +51,6 @@ public class SportController {
         model.addAttribute("sport", sport);
         model.addAttribute("boughtTickets", boughtTickets);
 
-        return "competitionList";
+        return "competition/list";
     }
 }
